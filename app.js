@@ -4,6 +4,7 @@
 let currentLang = 'en'; // 'en' or 'fr'
 let currentView = 'home';
 let progress = {};
+let totalScore = 0;
 
 /**
  * Initialize the application: bind event listeners, load progress, render initial view.
@@ -19,6 +20,12 @@ function initApp() {
     }
   }
 
+  // Load total score from localStorage
+  const storedScore = localStorage.getItem('totalScore');
+  if (storedScore) {
+    totalScore = parseInt(storedScore, 10) || 0;
+  }
+
   // Event listeners for theme toggle
   const themeToggle = document.getElementById('theme-toggle');
   themeToggle.addEventListener('click', () => {
@@ -30,6 +37,12 @@ function initApp() {
   langToggle.addEventListener('click', () => {
     toggleLanguage();
   });
+
+  // Event listener for score reset
+  const resetBtn = document.getElementById('reset-score');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', resetScore);
+  }
 
   // Event listeners for navigation
   const navButtons = document.querySelectorAll('#main-nav button');
@@ -102,6 +115,31 @@ function applyLanguage() {
   });
   // Footer progress info
   document.getElementById('progress-info').textContent = translations.progressInfo[currentLang];
+  const resetBtn = document.getElementById('reset-score');
+  if (resetBtn) {
+    resetBtn.textContent = currentLang === 'en' ? 'Reset Score' : 'Réinitialiser le score';
+  }
+  updateScoreDisplay();
+}
+
+function updateScoreDisplay() {
+  const label = currentLang === 'en' ? 'Total Score' : 'Score total';
+  const el = document.getElementById('total-score-display');
+  if (el) {
+    el.textContent = `${label}: ${totalScore}`;
+  }
+}
+
+function incrementTotalScore() {
+  totalScore++;
+  localStorage.setItem('totalScore', totalScore);
+  updateScoreDisplay();
+}
+
+function resetScore() {
+  totalScore = 0;
+  localStorage.setItem('totalScore', totalScore);
+  updateScoreDisplay();
 }
 
 /**
@@ -283,6 +321,7 @@ function renderQuiz(container) {
         if (opt === q.en) {
           btn.classList.add('correct');
           score++;
+          incrementTotalScore();
         } else {
           btn.classList.add('incorrect');
         }
@@ -356,6 +395,7 @@ function renderDictation(container) {
       input.style.color = isCorrect ? 'green' : 'red';
       if (isCorrect) {
         score++;
+        incrementTotalScore();
       }
       index++;
       setTimeout(() => {

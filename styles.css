@@ -72,7 +72,8 @@ header#app-header {
   object-fit: cover;
 }
 
-.header-right button {
+.header-right button,
+#score-bar button {
   margin-left: 0.5rem;
   padding: 0.4rem 0.6rem;
   border: none;
@@ -84,7 +85,8 @@ header#app-header {
   transition: background-color var(--transition-duration);
 }
 
-.header-right button:hover {
+.header-right button:hover,
+#score-bar button:hover {
   background-color: var(--primary-dark);
 }
 
@@ -134,6 +136,14 @@ header#app-header {
   border-top: 1px solid rgba(0,0,0,0.1);
   text-align: center;
   font-size: 0.9rem;
+}
+
+#score-bar {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* Card container for modules */
