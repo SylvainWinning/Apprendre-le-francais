@@ -177,6 +177,8 @@ header#app-header {
   height: 100%;
   backface-visibility: hidden;
   display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
