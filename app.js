@@ -334,24 +334,34 @@ function renderDictation(container) {
     input.style.width = '100%';
     input.style.padding = '0.5rem';
     input.style.marginTop = '0.5rem';
+    const feedback = document.createElement('p');
+    feedback.style.marginTop = '0.5rem';
     const submitBtn = document.createElement('button');
     submitBtn.textContent = currentLang === 'en' ? 'Submit' : 'Valider';
     submitBtn.style.marginTop = '0.5rem';
     submitBtn.addEventListener('click', () => {
       const val = input.value.trim().toLowerCase();
-      if (val === item.fr.toLowerCase()) {
+      const isCorrect = val === item.fr.toLowerCase();
+      feedback.textContent = isCorrect ? 'Correct' : 'Incorrect';
+      feedback.style.color = isCorrect ? 'green' : 'red';
+      input.style.borderColor = isCorrect ? 'green' : 'red';
+      input.style.color = isCorrect ? 'green' : 'red';
+      if (isCorrect) {
         score++;
       }
       index++;
-      if (index < items.length) {
-        showPrompt();
-      } else {
-        showDictationResult();
-      }
+      setTimeout(() => {
+        if (index < items.length) {
+          showPrompt();
+        } else {
+          showDictationResult();
+        }
+      }, 800);
     });
     dictationDiv.appendChild(title);
     dictationDiv.appendChild(playBtn);
     dictationDiv.appendChild(input);
+    dictationDiv.appendChild(feedback);
     dictationDiv.appendChild(submitBtn);
   }
 
