@@ -124,6 +124,9 @@ function initSnakeGame(canvas, infoContainer) {
     if (head.x === cheese.x && head.y === cheese.y) {
       // Increase score
       score++;
+      if (typeof incrementTotalScore === 'function') {
+        incrementTotalScore();
+      }
       // Play audio and show overlay
       const item = cheeseItems[cheeseIndex % cheeseItems.length];
       showWord(item);
