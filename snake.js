@@ -40,6 +40,10 @@ function initSnakeGame(canvas, infoContainer) {
   overlay.style.display = 'none';
   overlay.style.zIndex = '10';
   infoContainer.parentElement.appendChild(overlay);
+  // Dedicated score display
+  const scoreDisplay = document.createElement('div');
+  scoreDisplay.textContent = `${currentLang === 'en' ? 'Score' : 'Score'}: ${score}`;
+  infoContainer.appendChild(scoreDisplay);
   // Controls container
   const controls = document.createElement('div');
   controls.style.marginTop = '0.5rem';
@@ -100,10 +104,8 @@ function initSnakeGame(canvas, infoContainer) {
     ctx.beginPath();
     ctx.rect(cheese.x * cellSize + 4, cheese.y * cellSize + 4, cellSize - 8, cellSize - 8);
     ctx.fill();
-    // Score display
-    infoContainer.textContent = `${currentLang === 'en' ? 'Score' : 'Score'}: ${score}`;
-    // Add controls again (because text replacement removed them)
-    infoContainer.appendChild(controls);
+    // Update score display without clearing the container
+    scoreDisplay.textContent = `${currentLang === 'en' ? 'Score' : 'Score'}: ${score}`;
   }
 
   function update() {
