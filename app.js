@@ -159,13 +159,14 @@ function renderDaily(container) {
   list.forEach(item => {
     const card = document.createElement('div');
     card.className = 'card';
+    const learned = progress[item.id] && progress[item.id].learned;
     card.innerHTML = `
       <div class="daily-item">
         <h3>${item.fr}</h3>
         <p><em>${item.ipa}</em></p>
         <p>${item.en}</p>
         <button class="play-audio" data-text="${item.fr}"><i class="fa-solid fa-volume-high"></i> ${currentLang === 'en' ? 'Listen' : 'Écouter'}</button>
-        <button class="mark-learned" data-id="${item.id}"><i class="fa-solid fa-check"></i> ${currentLang === 'en' ? 'Learned' : 'Appris'}</button>
+        <button class="mark-learned" data-id="${item.id}" data-learned="${learned ? 'true' : 'false'}"><i class="fa-solid fa-check"></i> ${currentLang === 'en' ? (learned ? 'Marked' : 'Learned') : (learned ? 'Marqué' : 'Appris')}</button>
       </div>
     `;
     container.appendChild(card);
@@ -181,9 +182,16 @@ function renderDaily(container) {
   container.querySelectorAll('.mark-learned').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = parseInt(btn.getAttribute('data-id'));
-      updateDifficulty(id, true);
-      btn.disabled = true;
-      btn.textContent = currentLang === 'en' ? 'Marked' : 'Marqué';
+      const isLearned = btn.getAttribute('data-learned') === 'true';
+      const newState = !isLearned;
+      updateDifficulty(id, newState);
+      btn.setAttribute('data-learned', newState);
+      btn.textContent = currentLang === 'en' ? (newState ? 'Marked' : 'Learned') : (newState ? 'Marqué' : 'Appris');
+      if (!progress[id]) {
+        progress[id] = {};
+      }
+      progress[id].learned = newState;
+      localStorage.setItem('progress', JSON.stringify(progress));
     });
   });
 }
