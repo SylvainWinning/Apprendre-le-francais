@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>French Learning Adventure</title>
+  <!-- Core stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/mascot.jpg" />
+  <!-- Font Awesome (icons for UI controls) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body>
+  <header id="app-header">
+    <div class="header-left">
+      <img src="assets/mascot.jpg" alt="Mascot" class="mascot" />
+      <h1 id="title">French Learning Adventure</h1>
+    </div>
+    <div class="header-right">
+      <button id="lang-toggle" aria-label="Switch language" title="Switch language">EN</button>
+      <button id="theme-toggle" aria-label="Toggle theme" title="Toggle light/dark mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <nav id="main-nav">
+    <button data-view="home" class="active">Home</button>
+    <button data-view="daily">Daily List</button>
+    <button data-view="flashcards">Flashcards</button>
+    <button data-view="quiz">Quiz</button>
+    <button data-view="dictation">Dictation</button>
+    <button data-view="snake">Game</button>
+  </nav>
+
+  <main id="app-content">
+    <!-- Views will be injected here -->
+  </main>
+
+  <footer id="app-footer">
+    <p id="progress-info">Welcome! Ready to embark on your French learning journey.</p>
+  </footer>
+
+  <!-- Main application script -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="snake.js"></script>
+</body>
+</html>
